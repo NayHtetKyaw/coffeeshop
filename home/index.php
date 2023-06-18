@@ -7,7 +7,7 @@
     
         try{
             $connection = new PDO($dsn , $dbuser, $dbPassword); 
-            echo "connection successful";
+            // echo "connection successful";
     
         }catch(PDOException $e){
             // die ('Connection failed!' . $exception ->getMessage());
@@ -18,8 +18,14 @@
         $foodid = $drinkid = '';
 
         // $statement = ('SELECT food_name, price From foods WHERE meal_type = "Breakfast"');
-        $statement = ("SELECT * FROM foods WHERE meal_type ='Breakfast'");
-        $result = $connection->query($statement);
+        $breakfast = ("SELECT * FROM foods WHERE meal_type ='Breakfast'");
+        $lunch = ("SELECT * FROM foods WHERE meal_type ='Lunch'");
+        $drink = ("SELECT * FROM drinks WHERE speciality ='Normal'");
+
+        $breakfast_result = $connection->query($breakfast);
+        $lunch_result = $connection->query($lunch);
+        $drink_result = $connection->query($drink);
+
 
 ?>
 
@@ -157,7 +163,7 @@
 <!-- menu-nav -->
             <div class="menu-nav">
                 <ul>
-                    <li onclick="myFunction()">
+                    <li class='bf' onclick="myFunction()">
                         Breakfast
                     </li>
                         
@@ -172,10 +178,10 @@
             </div>
 
 <!-- menu lists -->
-            <!-- <div class="menu-options"> -->
-                <div id="breakfast" class="breakfast">
+            <div class="menu-options">
+                <div id="breakfast" class="menu-list breakfast">
                     <?php
-                        foreach ($result as $row){
+                        foreach ($breakfast_result as $row){
                             echo "<div class='menu-item'>"; 
                             echo "<img src='media/".$row['img']."'>";
                             echo $row['food_name']."<br>"; 
@@ -185,6 +191,33 @@
                         }
                     ?>
                 </div>
+
+                <div id="lunch" class="menu-list">
+                    <?php
+                        foreach ($lunch_result as $row){
+                            echo "<div class='menu-item'>"; 
+                            echo "<img src='media/".$row['img']."'>";
+                            echo $row['food_name']."<br>"; 
+                            echo "Price:฿".$row['price']."<br>";
+                            // echo "Meal:".$row['meal_type'];
+                            echo "</div>";
+                        }
+                    ?>
+                </div>
+
+                <div id="drink" class="menu-list">
+                    <?php
+                        foreach ($drink_result as $row){
+                            echo "<div class='menu-item'>"; 
+                            echo "<img src='media/".$row['img']."'>";
+                            echo $row['drink_name'].",".$row['drink_type']."<br>"; 
+                            echo "Price:฿".$row['price']."<br>";
+                            // echo "Meal:".$row['meal_type'];
+                            echo "</div>";
+                        }
+                    ?>
+                </div>
+            </div>
 <!-- special menu -->
             <div class="special-menu" id="special">
                 <h1>TODAY's SPECIAL</h1>
@@ -246,7 +279,7 @@
 
     </div>
 
-    <script>
+    <!-- <script>
          function myFunction(){
             var x = document.getElementById('breakfast');
             var y = document.getElementById('lunch');
@@ -258,7 +291,7 @@
                 x.style.display = 'flex';
             }else x.style.display = 'none';
         }
-    </script>
+    </script> -->
 
 <!-- footer -->
     <div class="footer">
