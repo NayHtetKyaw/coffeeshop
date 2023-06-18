@@ -314,7 +314,7 @@ body {
     font-family:"Inconsolata", "Helvetica Neue", Helvetica, Arial, sans-serif; 
     display: flex;
     color: #1d1d20;
-    justify-content: left;
+    justify-content: space-evenly;
     flex-direction: row;
     margin-left: 4rem;
     font-size: 1.5rem;
@@ -358,8 +358,8 @@ body {
 
 .breakfast {
   display: flex;
-  max-width: 35%;
-  justify-content: space-between;
+  max-width: 20%;
+  justify-content: space-evenly;
   align-items: center;
    flex-wrap: wrap;
   flex-direction: row;
@@ -369,7 +369,15 @@ body {
   /* border:#1c1c1c 2.5px outset; */
   border-radius: 10px;
   margin: 1rem;
-  align-self: center;
+  align-self: flex-start;
+}
+
+@media only screen and (min-width: 400px) {
+
+  .breakfast{
+      margin-left: 15%;
+  }
+
 }
 
 .menu-item {
@@ -384,6 +392,13 @@ body {
  
 }
 
+.menu-item img {
+  border-radius: 10px;
+  max-width: 150px;
+  max-height: 100px;
+  min-width: 150px;
+  min-height: 100px;
+}
 
 
 /* SPECIAL MENU */

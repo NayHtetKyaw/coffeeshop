@@ -13,7 +13,7 @@
      $_SESSION['messages'][] = 'Connection failed!' . $e->getMessage();
  }
 
-        $s1 = "SELECT * FROM foods WHERE food_id = 14";
+        $s1 = "SELECT * FROM foods WHERE food_id = 1";
         $r = $connection->query($s1);
 
         foreach ($r as $row){

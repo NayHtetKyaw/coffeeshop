@@ -34,8 +34,9 @@
             echo $data; 
             echo "<br>";
             echo $fp;
-            $statement = ("INSERT INTO foods(food_id,food_name,meal_type,speciality,food_type,price,img)
-                            VALUES('14','Burger1','Lunch','Normal','Humburger','4.99','$final_image')");
+            // $statement = ("INSERT INTO foods(food_id,food_name,meal_type,speciality,food_type,price,img)
+            //                 VALUES('1','Bagel','Breakfast','Normal','Bread','110','$final_image')");
+           $statement = "UPDATE foods SET img = '$final_image' WHERE food_id = 7";
                             $connection->exec($statement);
         }
 

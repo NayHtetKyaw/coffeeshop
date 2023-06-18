@@ -18,7 +18,7 @@
         $foodid = $drinkid = '';
 
         // $statement = ('SELECT food_name, price From foods WHERE meal_type = "Breakfast"');
-        $statement = ("SELECT * FROM foods");
+        $statement = ("SELECT * FROM foods WHERE meal_type ='Breakfast'");
         $result = $connection->query($statement);
 
 ?>
@@ -177,8 +177,9 @@
                     <?php
                         foreach ($result as $row){
                             echo "<div class='menu-item'>"; 
-                            echo $row['food_id'].". ".$row['food_name']."<br>"; 
-                            echo "Price:$".$row['price']."<br>";
+                            echo "<img src='media/".$row['img']."'>";
+                            echo $row['food_name']."<br>"; 
+                            echo "Price:฿".$row['price']."<br>";
                             // echo "Meal:".$row['meal_type'];
                             echo "</div>";
                         }
