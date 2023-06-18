@@ -1,3 +1,28 @@
+<?php
+    session_start();
+    // data base connection
+        $dsn = 'mysql:dbname=stamfordcafe;host=localhost';
+        $dbuser ='root';
+        $dbPassword ='security';
+    
+        try{
+            $connection = new PDO($dsn , $dbuser, $dbPassword); 
+            echo "connection successful";
+    
+        }catch(PDOException $e){
+            // die ('Connection failed!' . $exception ->getMessage());
+            $_SESSION['messages'][] = 'Connection failed!' . $e->getMessage();
+        }
+
+        //view data 
+        $foodid = $drinkid = '';
+
+        // $statement = ('SELECT food_name, price From foods WHERE meal_type = "Breakfast"');
+        $statement = ("SELECT * FROM foods");
+        $result = $connection->query($statement);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -147,20 +172,18 @@
             </div>
 
 <!-- menu lists -->
-            <div class="menu-options">
+            <!-- <div class="menu-options"> -->
                 <div id="breakfast" class="breakfast">
-
+                    <?php
+                        foreach ($result as $row){
+                            echo "<div class='menu-item'>"; 
+                            echo $row['food_id'].". ".$row['food_name']."<br>"; 
+                            echo "Price:$".$row['price']."<br>";
+                            // echo "Meal:".$row['meal_type'];
+                            echo "</div>";
+                        }
+                    ?>
                 </div>
-
-                <div id="luch" class="lunch">
-
-                </div>
-
-                <div id="drink" class="drink">
-
-                </div>
-            </div>
-
 <!-- special menu -->
             <div class="special-menu" id="special">
                 <h1>TODAY's SPECIAL</h1>
@@ -231,7 +254,7 @@
             // var display = x.style.display;
 
             if(x.style.display === 'none'){
-                x.style.display = 'block';
+                x.style.display = 'flex';
             }else x.style.display = 'none';
         }
     </script>
