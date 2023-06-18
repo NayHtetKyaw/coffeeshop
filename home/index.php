@@ -18,14 +18,17 @@
         $foodid = $drinkid = '';
 
         // $statement = ('SELECT food_name, price From foods WHERE meal_type = "Breakfast"');
-        $breakfast = ("SELECT * FROM foods WHERE meal_type ='Breakfast'");
-        $lunch = ("SELECT * FROM foods WHERE meal_type ='Lunch'");
+        $breakfast = ("SELECT * FROM foods WHERE meal_type ='Breakfast' AND speciality='Normal'");
+        $lunch = ("SELECT * FROM foods WHERE meal_type ='Lunch' AND speciality='Normal'");
         $drink = ("SELECT * FROM drinks WHERE speciality ='Normal'");
+        $special_food = ("SELECT * FROM foods WHERE speciality ='Special'");
+        $special_drink = ("SELECT * FROM drinks WHERE speciality ='Special'");
 
         $breakfast_result = $connection->query($breakfast);
         $lunch_result = $connection->query($lunch);
         $drink_result = $connection->query($drink);
-
+        $special_food_result = $connection->query($special_food);
+        $special_drink_result = $connection->query($special_drink);
 
 ?>
 
@@ -219,16 +222,28 @@
                 </div>
             </div>
 <!-- special menu -->
-            <div class="special-menu" id="special">
-                <h1>TODAY's SPECIAL</h1>
+        <h1>Today's Special</h1>
+        <div class="special-menu">
+            <div class="special-menu-list">
+                <?php 
+                    foreach ($special_food_result as $special_food) {
+                        echo "<div class='special-menu-item'>";
+                        echo "<img src='media/".$special_food['img']."'>";
+                        echo $special_food['food_name']."<br>";
+                        echo "Price:฿".$special_food['price']."<br>";
+                        echo "</div>";
+                    }
 
-                <div class="special-options">
-
-                </div>
+                    foreach ($special_drink_result as $special_drink) {
+                        echo "<div class='special-menu-item'>";
+                        echo "<img src='media/".$special_drink['img']."'>";
+                        echo $special_drink['drink_name']."<br>";
+                        echo "Price:฿".$special_drink['price']."<br>";
+                        echo "</div>";
+                    }
+                ?>
             </div>
-
         </div>
-
 <!-- contact us -->
 <div class="h1-contact">
     <h1>CONTACT</h1>
