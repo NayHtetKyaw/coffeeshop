@@ -255,7 +255,11 @@ CREATE TABLE `reservations` (
   `customer_email` varchar(45) NOT NULL,
   `package_name` varchar(45) NOT NULL,
   `room_id` varchar(45) NOT NULL,
-  PRIMARY KEY (`reservations_id`)
+  PRIMARY KEY (`reservations_id`),
+  KEY `package_idx` (`package_name`),
+  KEY `room_name_idx` (`room_id`),
+  CONSTRAINT `package_name` FOREIGN KEY (`package_name`) REFERENCES `packages` (`package_name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `room_name` FOREIGN KEY (`room_id`) REFERENCES `room` (`room_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -265,8 +269,34 @@ CREATE TABLE `reservations` (
 
 LOCK TABLES `reservations` WRITE;
 /*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
-INSERT INTO `reservations` VALUES (1,'2023-06-19','0829929030','anascence',2,'nayhtetkyaw86@gmail.com','Package 2','Boardame Room'),(2,'2023-06-19','0816756678','joseph',6,'maxmisteno@gmail.com','Package 2','Boardame Room'),(3,'2023-11-19','0814780546','long',2,'long@gmail.com','Package 2','Pet Room'),(4,'2023-06-19','098765433','Eaint',2,'eaintvickyyang@gmail.com','Package 2','Pet Room');
+INSERT INTO `reservations` VALUES (1,'2023-06-19','0829929030','anascence',2,'nayhtetkyaw86@gmail.com','Package 2','Boardgame Room'),(2,'2023-06-19','0816756678','joseph',6,'maxmisteno@gmail.com','Package 2','Boardgame Room'),(3,'2023-11-19','0814780546','long',2,'long@gmail.com','Package 2','Pet Room'),(4,'2023-06-19','098765433','Eaint',2,'eaintvickyyang@gmail.com','Package 2','Pet Room');
 /*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `room`
+--
+
+DROP TABLE IF EXISTS `room`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `room` (
+  `idroom` varchar(45) NOT NULL,
+  `room_name` varchar(45) NOT NULL,
+  `feature` varchar(45) NOT NULL,
+  PRIMARY KEY (`idroom`),
+  KEY `room_name` (`room_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `room`
+--
+
+LOCK TABLES `room` WRITE;
+/*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` VALUES ('1','Boardgame Room','Customer can play boardgames'),('2','Inernet Room','Customer can use computers'),('3','Pet Room','Customer can bring pets');
+/*!40000 ALTER TABLE `room` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -331,4 +361,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-19 14:54:40
+-- Dump completed on 2023-06-19 16:15:46
