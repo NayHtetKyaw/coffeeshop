@@ -3,7 +3,7 @@
     // data base connection
         $dsn = 'mysql:dbname=stamfordcafe;host=localhost';
         $dbuser ='root';
-        $dbPassword ='security';
+        $dbPassword ='';
     
         try{
             $connection = new PDO($dsn , $dbuser, $dbPassword); 
@@ -89,11 +89,11 @@
             </li>
 
             <li>
-                <a href="../reservation/index.html">RESERVAITON</a>
+                <a href="../reservation/index.php">RESERVAITON</a>
             </li>
 
             <li>
-                <a href="../feedback/index.html">FEEDBACK</a>
+                <a href="../feedback/index.php">FEEDBACK</a>
             </li>
         </ul>
     </div>

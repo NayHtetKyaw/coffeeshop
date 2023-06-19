@@ -1,3 +1,58 @@
+<?php 
+	// data base connection
+	$dsn = 'mysql:dbname=stamfordcafe;host=localhost';
+	$dbuser ='root';
+	$dbPassword ='';
+
+	try{
+		$connection = new PDO($dsn , $dbuser, $dbPassword); 
+		// echo "connection successful";
+
+	}catch(PDOException $e){
+		// die ('Connection failed!' . $exception ->getMessage());
+		$_SESSION['messages'][] = 'Connection failed!' . $e->getMessage();
+	}
+
+	$name = $email = $phone = $room = $guests = $date = $package = '';
+
+	if(isset($_POST['submit'])){
+		$name = $_POST['name'];
+		$email = $_POST['email'];
+		$phone = $_POST['phone'];
+		$room = $_POST['room'];
+		$guests = $_POST['no_of_guests'];
+		$date = $_POST['date'];
+		$package = $_POST['package'];
+
+		switch($guests){
+			// case "1 Person": $guests = 1; break;
+			case "2 Person": $guests = 2;break;
+			case "3 Person"; $guests = 3; break;
+			case "4 Person": $guests = 4; break;
+			case "5 Person": $guests = 5; break;
+			case "6 Person"; $guests = 6; break;
+			default: $guests = 1;
+		}
+
+		// switch($package){
+		// 	// case "Package 1": $package = 1; break;
+		// 	case "Package 2": $package = 2; break;
+		// 	case "Package 3": $package = 3; break;
+		// 	default: $package = 1;
+		// }
+
+
+		// echo $name, "<br>", $email,"<br>", $phone,"<br>", $room,"<br>", $guests,"<br>", $date,"<br>", $package; 
+
+		$statement = ("INSERT INTO reservations(reservation_date,customer_phone,customer_name,number_of_guests,customer_email,package_name,room_id)
+						VALUES('$date','$phone','$name','$guests','$email','$package','$room')");
+		
+		$connection->exec($statement);
+	}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,15 +101,15 @@
     <div class="nav">
         <ul>
             <li>
-                <a href="../home/index.html#home">ABOUT</a>
+                <a href="../home/index.php#home">ABOUT</a>
             </li>
             
             <li>
-                <a href="../home/index.html#menu">MENU</a>
+                <a href="../home/index.php#menu">MENU</a>
             </li>
 
             <li>
-                <a href="../home/index.html#special">SPECIAL</a>
+                <a href="../home/index.php#special">SPECIAL</a>
             </li>
 
             <li>
@@ -62,15 +117,15 @@
             </li>
 
             <li style="border-right: 1px solid;">
-                <a href="../home/index.html#contact" style="margin-right: 1rem;">CONTACT</a>
+                <a href="../home/index.php#contact" style="margin-right: 1rem;">CONTACT</a>
             </li>
 
             <li>
-                <a href="../reservation/index.html">RESERVAITON</a>
+                <a href="../reservation/index.php">RESERVAITON</a>
             </li>
 
             <li>
-				<a href="../feedback/index.html">FEEDBACK</a>
+				<a href="../feedback/index.php">FEEDBACK</a>
 			</li>
         </ul>
     </div>
@@ -87,17 +142,17 @@
 					</div>
 					<div class="col-md-6 col-md-offset-1">
 						<div class="booking-form">
-							<form>
+							<form method="post" action="">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<input class="form-control" type="text">
+											<input name="name" class="form-control" type="text">
 											<span class="form-label">Name</span>
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<input class="form-control" type="email">
+											<input name="email" class="form-control" type="email">
 											<span class="form-label">Email</span>
 										</div>
 									</div>
@@ -105,17 +160,17 @@
 								<div class="row">
 									<div class="col-md-6 phone">
 										<div class="form-group">
-											<input class="form-control"type="tel">
+											<input name="phone" class="form-control"type="tel">
 											<span class="form-label">Phone</span>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-6">
 										<div class="form-group">
 											<span class="form-label">Rooms</span>
-											<select class="form-control">
+											<select name="room" class="form-control">
 												
 												<option>Pet Room</option>
-												<option>Boardame Room</option>
+												<option>Boardgame Room</option>
 												<option>Internet Room</option>
 											</select>
 											<span class="select-arrow"></span>
@@ -124,13 +179,13 @@
 									<div class="col-md-3 col-sm-6">
 										<div class="form-group">
 											<span class="form-label">Guests</span>
-											<select class="form-control">
+											<select class="form-control" name="no_of_guests">
 												<option>1 Person</option>
-												<option>2 People</option>
-												<option>3 People</option>
-												<option>4 People</option>
-												<option>5 People</option>
-												<option>6 People</option>
+												<option>2 Person</option>
+												<option>3 Person</option>
+												<option>4 Person</option>
+												<option>5 Person</option>
+												<option>6 Person</option>
 											</select>
 											<span class="select-arrow"></span>
 										</div>
@@ -139,14 +194,14 @@
 								<div class="row checkin">
 									<div class="col-md-6">
 										<div class="form-group">
-											<input class="form-control" type="date" required>
+											<input name="date" class="form-control" type="date" required>
 											<span class="form-label">Check In</span>
 										</div>
 									</div>
 									<div class="col-md-3 set col-sm-6">
 										<div class="form-group">
 											<span class="form-label">Packages</span>
-											<select class="form-control">
+											<select class="form-control" name="package">
 												<option>Package 1</option>
 												<option>Package 2</option>
 												<option>Package 3</option>
@@ -156,7 +211,7 @@
 									</div>
 								</div>
 								<div class="form-btn">
-									<button class="submit-btn">Book Now</button>
+									<button name="submit" class="submit-btn">Book Now</button>
 								</div>
 							</form>
 						</div>

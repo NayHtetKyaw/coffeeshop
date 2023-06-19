@@ -1,3 +1,32 @@
+<?php 
+    session_start();
+    // data base connection
+        $dsn = 'mysql:dbname=stamfordcafe;host=localhost';
+        $dbuser ='root';
+        $dbPassword ='';
+    
+        try{
+            $connection = new PDO($dsn , $dbuser, $dbPassword); 
+            // echo "connection successful";
+    
+        }catch(PDOException $e){
+            // die ('Connection failed!' . $exception ->getMessage());
+            $_SESSION['messages'][] = 'Connection failed!' . $e->getMessage();
+        }
+        
+        $feedback = $date = '';
+
+        if(isset($_POST['submit'])){
+            $feedback = $_POST['feedback'];
+            $date = $_POST['date'];
+
+            $statement = ("INSERT INTO customer_feedbacks(feedback,fdate)VALUES('$feedback','$date')");
+            $connection->exec($statement);
+        }
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,15 +61,15 @@
     <div class="nav">
         <ul>
             <li>
-                <a href="../home/index.html#home">ABOUT</a>
+                <a href="../home/index.php#home">ABOUT</a>
             </li>
             
             <li>
-                <a href="../home/index.html#menu">MENU</a>
+                <a href="../home/index.php#menu">MENU</a>
             </li>
 
             <li>
-                <a href="../home/index.html#special">SPECIAL</a>
+                <a href="../home/index.php#special">SPECIAL</a>
             </li>
 
             <li>
@@ -48,15 +77,15 @@
             </li>
 
             <li style="border-right: 1px solid;">
-                <a href="../home/index.html#contact" style="margin-right: 1rem;">CONTACT</a>
+                <a href="../home/index.php#contact" style="margin-right: 1rem;">CONTACT</a>
             </li>
 
             <li>
-                <a href="../reservation/index.html">RESERVAITON</a>
+                <a href="../reservation/index.php">RESERVAITON</a>
             </li>
 
             <li>
-              <a href="../feedback/index.html">FEEDBACK</a>
+              <a href="../feedback/index.php">FEEDBACK</a>
             </li>
         </ul>
     </div>
@@ -65,7 +94,7 @@
         <h1>Suggestion box</h1>
     </div>
     <!-- feedback form -->
-       <form>
+       <form method="post" action="">
           <div class="feedbacks-form div">
 
             <div class="feedback-inputs">
@@ -73,11 +102,11 @@
                   <input type="date" name="date" required>
                 </div>
                 <div class="text">
-                  <textarea rows="15" cols="60" required placeholder="Please write your suggestions here..."></textarea>
+                  <textarea rows="15" cols="60" name="feedback" required placeholder="Please write your suggestions here..."></textarea>
                 </div>
 
                 <div class="submit-button">
-                  <button>SUBMIT</button>
+                  <button name='submit'>SUBMIT</button>
                 </div>
 
             </div>
