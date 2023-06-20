@@ -45,9 +45,9 @@
 
 
     <!-- links -->
-    <link rel="stylesheet" href="nav.css">
-    <link rel="stylesheet" href="tables.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./stuffs/nav.css">
+    <link rel="stylesheet" href="./stuffs/tables.css">
+    <link rel="stylesheet" href="./stuffs/style.css">
 
 </head>
 <body>
@@ -55,10 +55,10 @@
         <ul class="menu-bar">
             <li><a href="#">DASHBOARD</a></li>
             <li><a href="menu.php">MENU</a></li>
-            <li><a href="reservation.php">RESERVATIONS</a></li>
-            <li><a href="order.php">ORDER</a></li>
+            <li><a href="./reservations/reservation_list.php">RESERVATIONS</a></li>
+            <li><a href="./orders/orders_list.php">ORDER</a></li>
             <li><a href="checkout.php">CHECKOUT</a></li>
-            <li><a href="admin_list.php">ADMIN LIST</a></li>
+            <li><a href="./stuffs/admin_list.php">ADMIN LIST</a></li>
         </ul>
     </div>
 
