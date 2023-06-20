@@ -1,8 +1,8 @@
 CREATE DATABASE  IF NOT EXISTS `stamfordcafe` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `stamfordcafe`;
--- MySQL dump 10.13  Distrib 8.0.26, for macos11 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: stamfordcafe
+-- Host: localhost    Database: stamfordcafe
 -- ------------------------------------------------------
 -- Server version	8.0.33
 
@@ -29,8 +29,9 @@ CREATE TABLE `checkout` (
   `checkout_date` date NOT NULL,
   `status` varchar(45) NOT NULL,
   `final_price` double NOT NULL,
-  KEY `orderid_idx` (`order_id`),
-  CONSTRAINT `orderid` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
+  PRIMARY KEY (`order_id`),
+  KEY `order_id_idx` (`order_id`),
+  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,7 +56,7 @@ CREATE TABLE `customer_feedbacks` (
   `feedback` longtext NOT NULL,
   `fdate` date NOT NULL,
   PRIMARY KEY (`feedback_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +65,7 @@ CREATE TABLE `customer_feedbacks` (
 
 LOCK TABLES `customer_feedbacks` WRITE;
 /*!40000 ALTER TABLE `customer_feedbacks` DISABLE KEYS */;
-INSERT INTO `customer_feedbacks` VALUES (1,'sd fsdfskdflさdkjfぁskjfかsjdk','2023-06-13'),(2,'サkdksっkっwアbsd','2023-02-08'),(3,'サkdksっkっwアbsd','2023-02-08'),(4,'very good food','2023-06-24'),(5,'it was so shit serv','2023-06-19'),(6,'good\r\n','2023-06-02');
+INSERT INTO `customer_feedbacks` VALUES (1,'sd fsdfskdflさdkjfぁskjfかsjdk','2023-06-13'),(2,'サkdksっkっwアbsd','2023-02-08'),(3,'サkdksっkっwアbsd','2023-02-08'),(4,'very good food','2023-06-24'),(5,'it was so shit serv','2023-06-19'),(6,'good\r\n','2023-06-02'),(7,'ji ji iji ji','2023-06-20');
 /*!40000 ALTER TABLE `customer_feedbacks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +81,7 @@ CREATE TABLE `drinks` (
   `drink_name` varchar(45) NOT NULL,
   `speciality` varchar(45) NOT NULL,
   `drink_type` varchar(45) NOT NULL,
-  `price` float NOT NULL,
+  `dprice` float NOT NULL,
   `img` blob,
   PRIMARY KEY (`drink_id`),
   KEY `drinkname` (`drink_name`)
@@ -110,7 +111,7 @@ CREATE TABLE `foods` (
   `meal_type` varchar(45) NOT NULL,
   `speciality` varchar(45) NOT NULL,
   `food_type` varchar(45) NOT NULL,
-  `price` float NOT NULL,
+  `fprice` float NOT NULL,
   `img` tinyblob,
   PRIMARY KEY (`food_id`),
   KEY `foodname` (`food_name`)
@@ -136,8 +137,8 @@ DROP TABLE IF EXISTS `menu`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `menu` (
   `menu_no` varchar(45) NOT NULL,
-  `food` int NOT NULL,
-  `drink` int NOT NULL,
+  `food` int DEFAULT NULL,
+  `drink` int DEFAULT NULL,
   PRIMARY KEY (`menu_no`),
   KEY `food_idx` (`food`),
   KEY `drink_idx` (`drink`),
@@ -152,7 +153,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES ('M1',1,1),('M2',2,2),('M3',3,4),('M4',4,3),('M5',6,5),('M6',5,6);
+INSERT INTO `menu` VALUES ('M1',1,1),('M10',10,5),('M11',11,3),('M12',12,10),('M14',13,9),('M15',14,5),('M16',15,7),('M2',2,2),('M3',3,4),('M4',4,3),('M5',6,5),('M6',5,6),('M7',7,1),('M8',8,2),('M9',9,5);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,8 +170,8 @@ CREATE TABLE `order_detial` (
   `date` varchar(45) NOT NULL,
   `time` varchar(45) NOT NULL,
   `total_price` varchar(45) NOT NULL,
-  KEY `order_id_idx` (`order_id`),
-  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
+  KEY `orderid_idx` (`order_id`),
+  CONSTRAINT `orderid` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -191,17 +192,21 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
-  `order_id` int NOT NULL,
+  `order_id` int NOT NULL AUTO_INCREMENT,
   `table_id` int NOT NULL,
-  `menu_item` varchar(45) NOT NULL,
-  `quantity` varchar(45) NOT NULL,
+  `food` varchar(45) DEFAULT NULL,
+  `food_quantity` int DEFAULT NULL,
+  `drink` varchar(45) DEFAULT NULL,
+  `drink_quantity` int DEFAULT NULL,
+  `notes` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`order_id`),
   KEY `table_id_idx` (`table_id`),
-  KEY `food_name_idx` (`menu_item`),
-  CONSTRAINT `menu_drink_name` FOREIGN KEY (`menu_item`) REFERENCES `drinks` (`drink_name`),
-  CONSTRAINT `menu_food_name` FOREIGN KEY (`menu_item`) REFERENCES `foods` (`food_name`),
+  KEY `food_name_idx` (`food`),
+  KEY `menu_drink_name_idx` (`drink`),
+  CONSTRAINT `menu_drink_name` FOREIGN KEY (`drink`) REFERENCES `drinks` (`drink_name`),
+  CONSTRAINT `menu_food_name` FOREIGN KEY (`food`) REFERENCES `foods` (`food_name`),
   CONSTRAINT `table_id` FOREIGN KEY (`table_id`) REFERENCES `table` (`table_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,6 +215,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,1,'Sandwich',1,'Latte',1,'less salt'),(2,7,'Pizza',4,'Coca Cola',6,'hurry up please'),(3,8,'Spaghetti',4,'Ice Tea',3,'No spicy'),(4,24,'Pancake Bacon',2,'Cappuccino',2,'more sweet'),(6,7,'Mix Salad',2,'Americano',2,'No grass');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +266,7 @@ CREATE TABLE `reservations` (
   KEY `room_name_idx` (`room_id`),
   CONSTRAINT `package_name` FOREIGN KEY (`package_name`) REFERENCES `packages` (`package_name`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `room_name` FOREIGN KEY (`room_id`) REFERENCES `room` (`room_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +275,7 @@ CREATE TABLE `reservations` (
 
 LOCK TABLES `reservations` WRITE;
 /*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
-INSERT INTO `reservations` VALUES (1,'2023-06-19','0829929030','anascence',2,'nayhtetkyaw86@gmail.com','Package 2','Boardgame Room'),(2,'2023-06-19','0816756678','joseph',6,'maxmisteno@gmail.com','Package 2','Boardgame Room'),(3,'2023-11-19','0814780546','long',2,'long@gmail.com','Package 2','Pet Room'),(4,'2023-06-19','098765433','Eaint',2,'eaintvickyyang@gmail.com','Package 2','Pet Room');
+INSERT INTO `reservations` VALUES (1,'2023-06-19','0829929030','anascence',2,'nayhtetkyaw86@gmail.com','Package 2','Boardgame Room'),(2,'2023-06-19','0816756678','joseph',6,'maxmisteno@gmail.com','Package 2','Boardgame Room'),(3,'2023-11-19','0814780546','panthron',3,'long@gmail.com','Package 2','Pet Room'),(4,'2023-06-19','098765433','Eaint',2,'eaintvickyyang@gmail.com','Package 2','Pet Room'),(5,'2023-06-19','9823645293','Juny',1,'juny@gmail.com','Package 3','Boardgame Room');
 /*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,6 +335,33 @@ INSERT INTO `special_menu` VALUES (1,5,6),(2,6,7),(3,9,15);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `stuffs`
+--
+
+DROP TABLE IF EXISTS `stuffs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `stuffs` (
+  `stuff_id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `phone` varchar(45) NOT NULL,
+  `role` varchar(45) NOT NULL,
+  PRIMARY KEY (`stuff_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stuffs`
+--
+
+LOCK TABLES `stuffs` WRITE;
+/*!40000 ALTER TABLE `stuffs` DISABLE KEYS */;
+INSERT INTO `stuffs` VALUES (1,'ana','anascence','0882642344','engineer'),(2,'long','panthorn','0934342524','manager'),(3,'nikita','shampoo','097242523425','admin');
+/*!40000 ALTER TABLE `stuffs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `table`
 --
 
@@ -338,9 +371,9 @@ DROP TABLE IF EXISTS `table`;
 CREATE TABLE `table` (
   `table_id` int NOT NULL AUTO_INCREMENT,
   `no_of_seat` int NOT NULL,
-  `table_size` int NOT NULL,
+  `table_size` varchar(45) NOT NULL,
   PRIMARY KEY (`table_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,6 +382,7 @@ CREATE TABLE `table` (
 
 LOCK TABLES `table` WRITE;
 /*!40000 ALTER TABLE `table` DISABLE KEYS */;
+INSERT INTO `table` VALUES (1,6,'big'),(2,4,'medium'),(3,2,'small'),(4,1,'extra small'),(5,6,'big'),(6,1,'extra small'),(7,4,'medium'),(8,8,'extra big'),(9,2,'small'),(10,4,'medium'),(11,4,'medium'),(12,4,'medium'),(13,2,'small'),(14,2,'small'),(15,1,'extra small'),(16,6,'big'),(17,6,'big'),(18,8,'extra big'),(19,1,'extra small'),(20,2,'small'),(21,2,'small'),(22,2,'small'),(23,2,'small'),(24,2,'small'),(25,1,'extra small');
 /*!40000 ALTER TABLE `table` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -361,4 +395,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-19 16:15:46
+-- Dump completed on 2023-06-20 21:45:21
