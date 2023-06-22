@@ -25,15 +25,7 @@
             $drink_name = $_POST['drink_name'];
             $drink_type = $_POST['drink_type'];
             $speciality_d = $_POST['speciality'];
-            $dprice = $_POST['dprice'];
-
-             // $id = $_POST['reservations_id'];
-             $food_name = $_POST['food_name'];
-             $meal_type = $_POST['meal_type'];
-             $speciality_d = $_POST['speciality_d'];
-             $food_type = $_POST['food_type'];
-             $fprice = $_POST['fprice'];
- 
+            $dprice = $_POST['dprice']; 
              // file processing
          
              $image = rand(10000,1000000)."-".$_FILES['img']['name'];
@@ -59,16 +51,17 @@
         // food insert
 
         if (isset($_POST['submit'])) {
-            // $id = $_POST['reservations_id'];
+            $image = '';
+            // foods
             $food_name = $_POST['food_name'];
             $meal_type = $_POST['meal_type'];
             $speciality = $_POST['speciality'];
             $food_type = $_POST['food_type'];
             $fprice = $_POST['fprice'];
             // $image = $_POST['image'];
-
+           
             // file processing
-        
+           
             $image = rand(10000,1000000)."-".$_FILES['image']['name'];
             $file_loc = $_FILES['image']['tmp_name'];
             $file_size = $_FILES['image']['size'];
@@ -78,14 +71,14 @@
             $new_file_name = strtolower($image);
             $final_image=str_replace(' ','-',$new_file_name);
 
-            move_uploaded_file($file_loc,$folder.$final_image);
-            $data = $final_image;
-            // echo $name;
-            $statement_food = ("INSERT INTO foods (food_name,meal_type,speciality,food_type,fprice,img)
-                VALUES('$food_name','$meal_type','$speciality','$food_type','$fprice','$final_image')");
+            
 
+            $fp = move_uploaded_file($file_loc,$folder.$final_image);
+    
+            $statement_food = ("INSERT INTO foods (food_name,meal_type,speciality,food_type,fprice,img)
+            VALUES('$food_name','$meal_type','$speciality','$food_type','$fprice','$final_image')");;
+           
             $connection->exec($statement_food);
-          
         }
 
 ?>
@@ -123,7 +116,7 @@
                 <li><a href="../reservations/reservation_list.php">RESERVATIONS</a></li>
                 <li><a href="../orders/orders_list.php">ORDER</a></li>
                 <li><a href="../checkout/checkout_list.php">CHECKOUT</a></li>
-                <li><a href="../../home/media/">ADMIN LIST</a></li>
+                <li><a href="../stuffs/admin_list.php">ADMIN LIST</a></li>
             </ul>
         </div>
 
@@ -131,7 +124,7 @@
         
         <div class="container-box">
             <h3>Insert New Menu</h3>
-            <form method="post" action="">
+            <form method="post" action="" enctype="multipart/form-data">
                 <!-- Material input -->
                 <div class="container-1">
                     <h2>ADD FOOD</h2>
@@ -156,7 +149,7 @@
                     </div>
 
                     <div class="md-form">
-                        <input type="text" id="form1" name="fprice" class="form-control">
+                        <input type="number" id="form1" name="fprice" class="form-control">
                         <label for="form1">Price</label>
                     </div>
 
