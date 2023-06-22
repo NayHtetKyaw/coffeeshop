@@ -118,6 +118,7 @@
                 <li><a href="orders_list.php">ORDER</a></li>
                 <li><a href="../checkout/checkout_list.php">CHECKOUT</a></li>
                 <li><a href="../stuffs/admin_list.php">ADMIN LIST</a></li>
+                <li><a href="../stuffs/logs.php">LOGS</a></li>
             </ul>
         </div>
 

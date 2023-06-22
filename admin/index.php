@@ -20,7 +20,8 @@
 
     $order_statement = ("SELECT * FROM ORDERS");
 
-    $menu_statement = ("SELECT food, foods.food_name, foods.fprice,foods.meal_type, foods.speciality, drink, drinks.drink_name, drinks.dprice, drinks.drink_type, drinks.speciality
+    $menu_statement = ("SELECT food, foods.food_name, foods.fprice,foods.meal_type, foods.speciality, drink, 
+                        drinks.drink_name, drinks.dprice, drinks.drink_type, drinks.speciality
                         FROM stamfordcafe.menu 
                         INNER JOIN foods ON food = foods.food_id
                         INNER JOIN drinks ON drink = drinks.drink_id");
@@ -54,11 +55,12 @@
     <div class="nav">
         <ul class="menu-bar">
             <li><a href="#">DASHBOARD</a></li>
-            <li><a href="menu.php">MENU</a></li>
+            <li><a href="./menu/menu_list.php">MENU</a></li>
             <li><a href="./reservations/reservation_list.php">RESERVATIONS</a></li>
             <li><a href="./orders/orders_list.php">ORDER</a></li>
-            <li><a href="checkout.php">CHECKOUT</a></li>
+            <li><a href="./checkout/checkout_list.php">CHECKOUT</a></li>
             <li><a href="./stuffs/admin_list.php">ADMIN LIST</a></li>
+            <li><a href="./stuffs/logs.php">LOGS</a></li>
         </ul>
     </div>
 

@@ -17,7 +17,7 @@
 
             $food_id = $food_name = $price = $meal_type = $speciality =
             $food_type = $price = $image ='';
-
+            //
             $image = rand(10000,1000000)."-".$_FILES['img']['name'];
             $file_loc = $_FILES['img']['tmp_name'];
             $file_size = $_FILES['img']['size'];
@@ -36,7 +36,7 @@
             echo $fp;
             // $statement = ("INSERT INTO foods(food_id,food_name,meal_type,speciality,food_type,price,img)
             //                 VALUES('1','Bagel','Breakfast','Normal','Bread','110','$final_image')");
-           $statement = "UPDATE drinks SET img = '$final_image' WHERE drink_id = 9";
+           $statement = "UPDATE foods SET img = '$final_image' WHERE food_id = 1";
                             $connection->exec($statement);
         }
 
